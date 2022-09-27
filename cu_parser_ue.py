@@ -27,8 +27,8 @@ class cu_ue(object):
 	CU information parser: Num_Of_Active_UE
 	'''
 	def _cu_parser(self):
-		# cu_tail = 'tail -n 15 /home/BaiBBU_XSS/BaiBBU_SXSS/CU/bin/pdcp.log'
-		cu_tail = 'tail -n 15 20220927_16_pdcp.log'
+		cu_tail = 'tail -n 15 /home/BaiBBU_XSS/BaiBBU_SXSS/CU/bin/pdcp.log'
+		# cu_tail = 'tail -n 15 20220927_16_pdcp.log'
 		re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
 
 		# contentRex
