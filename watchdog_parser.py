@@ -28,7 +28,7 @@ class watchdog(object):
 	'''
 	def _watchdog_parser(self):
 		die_status = bool()
-		cu_tail = 'tail -n 30 /mnt/log/watchdog.log'
+		cu_tail = 'tail -n 80 /mnt/log/watchdog.log'
 		# cu_tail = 'tail -n 15 20220923_07_watchdog.log'
 		re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
 
@@ -36,7 +36,8 @@ class watchdog(object):
 		find_cu_str = r'Watchdog kicks missed=\d+.*\D(.*) cmd ok:(\D+)\d+.*Watchdog collect die log complete.'
 		contentRex = re.findall(find_cu_str, re_cu)
 		# print(contentRex)
-		re_contentRex = ' '.join(contentRex[0])
+		len_contentRex = len(contentRex)-1
+		re_contentRex = ' '.join(contentRex[len_contentRex])
 		re_contentRex = re_contentRex.split(' ')
 		# print(re_contentRex)
 		timerRex = re_contentRex[0] + ' ' + re_contentRex[1]
