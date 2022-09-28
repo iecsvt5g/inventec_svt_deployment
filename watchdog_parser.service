@@ -1,0 +1,9 @@
+[Unit]
+Description=PHY BLER Parser
+
+[Service]
+Type=simple
+ExecStart=/etc/inventec_svt_deployment/watchdog_parser
+
+[Install]
+WantedBy=multi-user.target

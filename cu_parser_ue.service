@@ -1,0 +1,9 @@
+[Unit]
+Description=CU UE Parser
+
+[Service]
+Type=simple
+ExecStart=/etc/inventec_svt_deployment/cu_parser_ue
+
+[Install]
+WantedBy=multi-user.target

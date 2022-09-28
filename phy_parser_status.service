@@ -1,0 +1,9 @@
+[Unit]
+Description=PHY STATUS Parser
+
+[Service]
+Type=simple
+ExecStart=/etc/inventec_svt_deployment/phy_parser_status
+
+[Install]
+WantedBy=multi-user.target
