@@ -28,7 +28,7 @@ class watchdog(object):
 	'''
 	def _watchdog_parser(self):
 		die_status = bool()
-		cu_tail = 'tail -n 80 /mnt/log/watchdog.log'
+		cu_tail = 'tail -n 500 /mnt/log/watchdog.log'
 		# cu_tail = 'tail -n 15 20220923_07_watchdog.log'
 		re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
 
