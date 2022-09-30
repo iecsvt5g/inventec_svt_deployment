@@ -1,5 +1,5 @@
 [Unit]
-Description=PHY BLER Parser
+Description=Watchdog Parser
 
 [Service]
 Type=simple
