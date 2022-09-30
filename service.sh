@@ -3,9 +3,6 @@ systemctl daemon-reload
 systemctl restart phy_parser.service
 systemctl status phy_parser.service | grep Loaded
 systemctl status phy_parser.service | grep Active
-#systemctl restart phy_bler_parser.service
-#systemctl status phy_bler_parser.service | grep Loaded
-#systemctl status phy_bler_parser.service | grep Active
 systemctl restart cu_parser.service
 systemctl status cu_parser.service | grep Loaded
 systemctl status cu_parser.service | grep Active
