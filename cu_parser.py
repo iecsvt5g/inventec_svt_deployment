@@ -28,26 +28,35 @@ class cu(object):
 	DL_GTPU_Ingress, DL_GTPU_Egress
 	'''
 	def _cu_parser(self):
-		cu_tail = 'tail -n 15 /home/BaiBBU_XSS/BaiBBU_SXSS/CU/bin/pdcp.log'
-		re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
-		# contentRex
-		find_cu_str = r'DL GTPU ingress traffic\D+(\d+.\d+) bps\D+(\d+.\d+)\D+Timer:(\D{3}) (\D{3}) (\d{2}) (.*) (\d{4})\D+DL PDCP ingress traffic\D+(\d+.\d+) bps\D+egress traffic\D+(\d+.\d+) bps .*\D+UL PDCP ingress traffic\D+(\d+.\d+) bps\D+egress traffic\D+(\d+.\d+) bps .*\D+.*\D+.*\D'
-		contentRex = re.findall(find_cu_str, re_cu)
-		re_contentRex = ' '.join(contentRex[0])
-		re_contentRex = re_contentRex.split(' ')
-		timerRex = re_contentRex[2] + ' ' + re_contentRex[3] + ' ' + re_contentRex[4] + ' ' + re_contentRex[5] + ' ' + re_contentRex[6]
-		# print(timerRex)
-		utc_time = self.datetime_taiwan_to_utc(timerRex)
-		print(utc_time)
-		ip = self._ip_parser()
-		print(ip)
-		print('DL GTPU ingress traffic', re_contentRex[0])
-		print('DL GTPU egress traffic', re_contentRex[1])
-		print('DL PDCP ingress traffic', re_contentRex[7])
-		print('DL PDCP egress traffic', re_contentRex[8])
-		print('UL PDCP ingress traffic', re_contentRex[9])
-		print('UL PDCP egress traffic', re_contentRex[10])
-		self.insert_database(utc_time, ip, re_contentRex[7], re_contentRex[8], re_contentRex[9], re_contentRex[10], re_contentRex[0], re_contentRex[1])
+		while True:
+			cu_tail = 'tail -n 100 /home/BaiBBU_XSS/BaiBBU_SXSS/CU/bin/pdcp.log'
+			# cu_tail = 'tail -n 100 20220927_16_pdcp.log'
+			re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
+			# contentRex
+			find_cu_str = r'DL GTPU ingress traffic\D+(\d+.\d+) bps\D+(\d+.\d+)\D+Timer:(\D+\d+\D+\d+\D+\d+\D+\d+\D+\d+)\D+DL PDCP ingress traffic\D+(\d+.\d+) bps\D+egress traffic\D+(\d+.\d+) bps .*\D+UL PDCP ingress traffic\D+(\d+.\d+) bps\D+egress traffic\D+(\d+.\d+) bps .*\D+.*\D+.*\D'
+			contentRex = re.findall(find_cu_str, re_cu)
+			if len(contentRex) == 0:
+				break
+			else:
+				contentRex = contentRex[:]
+				# print(contentRex)
+				len_contentRex = len(contentRex)-1
+				re_contentRex = contentRex[len_contentRex]
+				# print(re_contentRex)
+				timerRex = re_contentRex[2]
+				# print(timerRex)
+				utc_time = self.datetime_taiwan_to_utc(timerRex)
+				print(utc_time)
+				ip = self._ip_parser()
+				print(ip)
+				print('DL GTPU ingress traffic', re_contentRex[0])
+				print('DL GTPU egress traffic', re_contentRex[1])
+				print('DL PDCP ingress traffic', re_contentRex[3])
+				print('DL PDCP egress traffic', re_contentRex[4])
+				print('UL PDCP ingress traffic', re_contentRex[5])
+				print('UL PDCP egress traffic', re_contentRex[6])
+				self.insert_database(utc_time, ip, re_contentRex[0], re_contentRex[1], re_contentRex[3], re_contentRex[4], re_contentRex[5], re_contentRex[6])
+				break
 
 	'''
 	IP Address Parser
