@@ -27,35 +27,38 @@ class phy(object):
 	PHY information parser: PHY status parser
 	'''
 	def _phy_parser(self):
-		die_status = bool()
-		# gnb_io_fpga_thread_stop parser
-		gnb_stop = 'grep \"gnb_io_fpga_thread_stop\" /home/BaiBBU_XSS/BaiBBU_PXSS/PHY/bin/Phy.log \
-						| awk \'END{print $1}\' | sed \'s/*//g\''
-		# gnb_stop = 'grep \"gnb_io_fpga_thread_stop\" Phy.log | awk \'END{print $1}\' | sed \'s/*//g\''
-		phy_gnb_stop = check_output(gnb_stop, shell=True).decode('utf-8').strip()
-		# print(phy_gnb_stop)
+		while True:
+			die_status = bool()
+			# gnb_io_fpga_thread_stop parser
+			gnb_stop = 'grep \"gnb_io_fpga_thread_stop\" /home/BaiBBU_XSS/BaiBBU_PXSS/PHY/bin/Phy.log \
+							| awk \'END{print $1}\' | sed \'s/*//g\''
+			# gnb_stop = 'grep \"gnb_io_fpga_thread_stop\" Phy.log | awk \'END{print $1}\' | sed \'s/*//g\''
+			phy_gnb_stop = check_output(gnb_stop, shell=True).decode('utf-8').strip()
+			if len(phy_gnb_stop) == 0:
+				print('no value')
+				break
+			else:
+				print('value', phy_gnb_stop)
+			
+			ip = self._ip_parser()
+			print(ip)
+			# locat time parser
+			local_time = 'grep \"local time:  \" /home/BaiBBU_XSS/BaiBBU_PXSS/PHY/bin/Phy.log \
+							| awk \'END{print $(NF-1), $(NF)}\' | sed \'s/*//g\''
+			# local_time = 'grep \"local time:  \" Phy.log | awk \'END{print $(NF-1), $(NF)}\' | sed \'s/*//g\''
+			phy_local_time = check_output(local_time, shell=True).decode('utf-8').strip()
+			# print(phy_local_time)
 
-		# locat time parser
-		local_time = 'grep \"local time:  \" /home/BaiBBU_XSS/BaiBBU_PXSS/PHY/bin/Phy.log \
-						| awk \'END{print $(NF-1), $(NF)}\' | sed \'s/*//g\''
-		# local_time = 'grep \"local time:  \" Phy.log | awk \'END{print $(NF-1), $(NF)}\' | sed \'s/*//g\''
-		phy_local_time = check_output(local_time, shell=True).decode('utf-8').strip()
-		# print(phy_local_time)
-		utc_time = self.datetime_taiwan_to_utc(phy_local_time)
-		print(utc_time)
-		ip = self._ip_parser()
-		print(ip)
-
-		# PHY status check
-		if phy_gnb_stop and utc_time:
-			print('value')
-			die_status = True
-			self.insert_database(utc_time, ip, die_status)
-		else:
-			print('no value')
-			die_status = False
-			self.insert_database(utc_time, ip, die_status)
-			pass
+			# PHY status check
+			if phy_local_time:
+				print('value')
+				utc_time = self.datetime_taiwan_to_utc(phy_local_time)
+				die_status = True
+				self.insert_database(utc_time, ip, die_status)
+				break
+			else:
+				print('no value', phy_local_time)
+				break
 
 	'''
 	IP Address Parser
