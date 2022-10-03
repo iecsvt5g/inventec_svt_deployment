@@ -55,7 +55,7 @@ class cu(object):
 				print('DL PDCP egress traffic', re_contentRex[4])
 				print('UL PDCP ingress traffic', re_contentRex[5])
 				print('UL PDCP egress traffic', re_contentRex[6])
-				self.insert_database(utc_time, ip, re_contentRex[0], re_contentRex[1], re_contentRex[3], re_contentRex[4], re_contentRex[5], re_contentRex[6])
+				self.insert_database(utc_time, ip, re_contentRex[5], re_contentRex[6], re_contentRex[3], re_contentRex[4], re_contentRex[0], re_contentRex[1])
 				break
 
 	'''
