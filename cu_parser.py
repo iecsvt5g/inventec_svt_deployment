@@ -31,7 +31,10 @@ class cu(object):
 		while True:
 			cu_tail = 'tail -n 100 /home/BaiBBU_XSS/BaiBBU_SXSS/CU/bin/pdcp.log'
 			# cu_tail = 'tail -n 100 20220927_16_pdcp.log'
-			re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
+			try:
+				re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
+			except:
+				break
 			# contentRex
 			find_cu_str = r'DL GTPU ingress traffic\D+(\d+.\d+) bps\D+(\d+.\d+)\D+Timer:(\D+\d+\D+\d+\D+\d+\D+\d+\D+\d+)\D+DL PDCP ingress traffic\D+(\d+.\d+) bps\D+egress traffic\D+(\d+.\d+) bps .*\D+UL PDCP ingress traffic\D+(\d+.\d+) bps\D+egress traffic\D+(\d+.\d+) bps .*\D+.*\D+.*\D'
 			contentRex = re.findall(find_cu_str, re_cu)
@@ -55,7 +58,7 @@ class cu(object):
 				print('DL PDCP egress traffic', re_contentRex[4])
 				print('UL PDCP ingress traffic', re_contentRex[5])
 				print('UL PDCP egress traffic', re_contentRex[6])
-				self.insert_database(utc_time, ip, re_contentRex[5], re_contentRex[6], re_contentRex[3], re_contentRex[4], re_contentRex[0], re_contentRex[1])
+				self.insert_database(utc_time, ip, re_contentRex[3], re_contentRex[4], re_contentRex[5], re_contentRex[6], re_contentRex[0], re_contentRex[1])
 				break
 
 	'''
