@@ -31,8 +31,10 @@ class cu_ue(object):
 		while True:
 			cu_tail = 'tail -n 100 /home/BaiBBU_XSS/BaiBBU_SXSS/CU/bin/pdcp.log'
 			# cu_tail = 'tail -n 100 20220927_16_pdcp.log'
-			re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
-
+			try:
+				re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
+			except:
+				break
 			# contentRex
 			find_cu_str = r'Timer:(\D+\d+\D+\d+\D+\d+\D+\d+\D+\d+)'
 			contentRex = re.findall(find_cu_str, re_cu)
