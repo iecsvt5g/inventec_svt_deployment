@@ -10,4 +10,6 @@ systemctl status watchdog_parser.service | grep Loaded
 systemctl status watchdog_parser.service | grep Active
 systemctl status phy_parser_status.service | grep Loaded
 systemctl status phy_parser_status.service | grep Active
+systemctl status du_parser.service | grep Loaded
+systemctl status du_parser.service | grep Active
 echo 'Service status is showed.'
