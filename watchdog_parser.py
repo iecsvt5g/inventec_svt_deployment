@@ -1,6 +1,7 @@
 #/usr/bin/python3
 '''
 Created on 2022/09/27
+Modified on 2022/10/06
 
 @author: ZL Chen
 @title: Watchdog Status Parser
@@ -26,37 +27,46 @@ class watchdog(object):
 	'''
 	Watchdog information parser: Watchdog status parser
 	'''
-	def _watchdog_parser(self):
-		die_status = bool()
-		cu_tail = 'tail -n 500 /mnt/log/watchdog.log'
-		# cu_tail = 'tail -n 15 20220923_07_watchdog.log'
-		re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
+	def _watchdog_parser(self, initial_datetime):
+		try:
+			die_status = bool()
+			cu_tail = 'tail -n 500 /mnt/log/watchdog.log'
+			# cu_tail = 'tail -n 15 20220923_07_watchdog.log'
+			re_cu = check_output(cu_tail, shell=True).decode('utf-8').strip()
 
-		# contentRex
-		find_cu_str = r'Watchdog kicks missed=\d+.*\D(.*) cmd ok:(\D+)\d+.*Watchdog collect die log complete.'
-		contentRex = re.findall(find_cu_str, re_cu)
-		# print(contentRex)
-		len_contentRex = len(contentRex)-1
-		re_contentRex = ' '.join(contentRex[len_contentRex])
-		re_contentRex = re_contentRex.split(' ')
-		# print(re_contentRex)
-		timerRex = re_contentRex[0] + ' ' + re_contentRex[1]
-		# print(timerRex)
-		utc_time = self.datetime_taiwan_to_utc(timerRex)
-		print(utc_time)
-		ip = self._ip_parser()
-		print(ip)
+			# contentRex
+			find_cu_str = r'Watchdog kicks missed=\d+.*\D(.*) cmd ok:(\D+)\d+.*Watchdog collect die log complete.'
+			contentRex = re.findall(find_cu_str, re_cu)
+			# print(contentRex)
+			len_contentRex = len(contentRex)-1
+			re_contentRex = ' '.join(contentRex[len_contentRex])
+			re_contentRex = re_contentRex.split(' ')
+			# print(re_contentRex)
+			timerRex = re_contentRex[0] + ' ' + re_contentRex[1]
+			# print(timerRex)
+			utc_time = self.datetime_taiwan_to_utc(timerRex)
+			# print(utc_time)
+			if utc_time == initial_datetime and die_status == True:
+				pass
+			elif utc_time == initial_datetime and die_status == False:
+				pass
+			else:
+				initial_datetime = utc_time
+				ip = self._ip_parser()
+				print(utc_time, ip)
 
-		# DIE check
-		die_check = re_contentRex[2] + ' ' + re_contentRex[3]
-		if die_check == '[logCollect die]\n':
-			print('value')
-			die_status = True
-			self.insert_database(utc_time, ip, die_status)
-		else:
-			print('no value')
-			die_status = False
-			self.insert_database(utc_time, ip, die_status)
+				# DIE check
+				die_check = re_contentRex[2] + ' ' + re_contentRex[3]
+				if die_check == '[logCollect die]\n':
+					# print('value')
+					die_status = True
+					self.insert_database(utc_time, ip, die_status)
+				else:
+					# print('no value')
+					die_status = False
+					self.insert_database(utc_time, ip, die_status)
+			return initial_datetime
+		except:
 			pass
 
 	'''
@@ -97,7 +107,8 @@ class watchdog(object):
 			pass
 
 if __name__ == '__main__':
+	initial_datetime = ''
 	while True:
 		func = watchdog()
-		func._watchdog_parser()
+		initial_datetime = func._watchdog_parser(initial_datetime)
 		sleep(3)
