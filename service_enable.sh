@@ -18,4 +18,4 @@ systemctl status phy_parser_status.service | grep Active
 systemctl enable du_parser.service
 systemctl status du_parser.service | grep Loaded
 systemctl status du_parser.service | grep Active
-echo 'Service is enabled.'
+echo 'Service status is showed.'
