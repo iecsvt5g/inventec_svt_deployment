@@ -57,11 +57,10 @@ class du(object):
 			for cell_number in range(int(cell_tail)):
 				find_du_cell_str = r'5GNR SYSTEM OVERVIEW AT\D+\d+\D+\d+\D+\d+\D+' + str(cell_number) + '\D.*\D+.*\D+.*\D+.*'\
 						r'CRC_GOOD \D{1}(\d+)\D{1}\D+.*CRC_BAD\D{1}(\d+)\D{1}\D+.*UL_MCS_AVG\D{1}(\d+)\D{1}'\
-						r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*'\
+						r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*PUSCH MAX DMRS PWR RBIDX\D+\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*'\
 							r'ACK\D+(\d+)\D+\D+(\d+)\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*'\
 							r'UL: rank1\D{1}(\d+)\D+rank2\D{1}(\d+)\D{1} schedduled layer1\D{1}(\d+)\D{1} layer2\D{1}(\d+)\D{1}'\
-								r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+macActiveUe\D{1}(\d+)\D{1}\D+.*'\
-								r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+'\
+								r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+macActiveUe\D{1}(\d+)\D{1}\D+.*\D+.*avgPrbAsgnRateDl\D+(\d+)%\D+.*\D+.*avgPrbAsgnRateUl\D+(\d+)%\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+'\
 									r'MAC DL traffic :ingress\D{1}(\d+\D+\d+)\D{1}\D+.*cell_index\D{1}(\d+)\D{1}'
 				# print(find_du_cell_str)
 				contentRex_cell = re.findall(find_du_cell_str, re_du)
@@ -105,27 +104,43 @@ class du(object):
 					# print('RLCL DL traffic um throughput', re_contentRex[9])
 					# print('RLCL DL traffic am throughput', re_contentRex[10])
 
-					# for j in range(12):
+					# for j in range(20):
 					# 	print('re_contentRex_cell', re_contentRex_cell[j])
-					# print('Cell', re_contentRex_cell[11])
+					# print('Cell', re_contentRex_cell[19])
 					# print('CRC GOOD', re_contentRex_cell[0])
 					# print('CRC BAD', re_contentRex_cell[1])
 					# print('UL MCS AVG', re_contentRex_cell[2])
-					# print('ACK', re_contentRex_cell[3])
-					# print('NACK', re_contentRex_cell[4])
-					# print('UL RANK_1', re_contentRex_cell[5])
-					# print('UL RANK_2', re_contentRex_cell[6])
-					# print('UL Scheduled Layer_1', re_contentRex_cell[7])
-					# print('UL Scheduled Layer_2', re_contentRex_cell[8])
-					# print('macActiveUe', re_contentRex_cell[9])
-					# print('MAC DL traffic ingress', re_contentRex_cell[10])
+					# print('PUSCH PWR_0_45', re_contentRex_cell[3])
+					# print('PUSCH PWR_45_90', re_contentRex_cell[4])
+					# print('PUSCH PWR_90_135', re_contentRex_cell[5])
+					# print('PUSCH PWR_135_180', re_contentRex_cell[6])
+					# print('PUSCH PWR_180_225', re_contentRex_cell[7])
+					# print('PUSCH PWR_225_273', re_contentRex_cell[8])
+					# print('ACK', re_contentRex_cell[9])
+					# print('NACK', re_contentRex_cell[10])
+					# print('UL RANK_1', re_contentRex_cell[11])
+					# print('UL RANK_2', re_contentRex_cell[12])
+					# print('UL Scheduled Layer_1', re_contentRex_cell[13])
+					# print('UL Scheduled Layer_2', re_contentRex_cell[14])
+					# print('macActiveUe', re_contentRex_cell[15])
+					# print('avgPrbAsgnRateDl', re_contentRex_cell[16])
+					# print('avgPrbAsgnRateUl', re_contentRex_cell[17])
+					# print('MAC DL traffic ingress', re_contentRex_cell[18])
 						
-					self.insert_database(utc_time, ip\
-						, re_contentRex[1], re_contentRex[2], re_contentRex[3], re_contentRex[4], re_contentRex[5]\
-						, re_contentRex[6], re_contentRex[7], re_contentRex[8], re_contentRex[9], re_contentRex[10]\
-						, re_contentRex_cell[11], re_contentRex_cell[0], re_contentRex_cell[1], re_contentRex_cell[2]\
-						, re_contentRex_cell[3], re_contentRex_cell[4], re_contentRex_cell[5], re_contentRex_cell[6]\
-						, re_contentRex_cell[7], re_contentRex_cell[8], re_contentRex_cell[9], re_contentRex_cell[10])
+					self.insert_database(utc_time, ip, re_contentRex[1], re_contentRex[2], re_contentRex[3], re_contentRex[4], \
+						re_contentRex[5], re_contentRex[6], re_contentRex[7], re_contentRex[8], re_contentRex[9], re_contentRex[10], \
+						re_contentRex_cell[19], re_contentRex_cell[0], re_contentRex_cell[1], re_contentRex_cell[2], re_contentRex_cell[3], \
+						re_contentRex_cell[4], re_contentRex_cell[5], re_contentRex_cell[6], re_contentRex_cell[7], re_contentRex_cell[8], \
+						re_contentRex_cell[9], re_contentRex_cell[10], re_contentRex_cell[11], re_contentRex_cell[12], re_contentRex_cell[13], \
+						re_contentRex_cell[14], re_contentRex_cell[15], re_contentRex_cell[16], re_contentRex_cell[17], re_contentRex_cell[18])
+	
+					# print(utc_time, ip, re_contentRex[1], re_contentRex[2], re_contentRex[3], re_contentRex[4], \
+					# 	re_contentRex[5], re_contentRex[6], re_contentRex[7], re_contentRex[8], re_contentRex[9], re_contentRex[10], \
+					# 	re_contentRex_cell[19], re_contentRex_cell[0], re_contentRex_cell[1], re_contentRex_cell[2], re_contentRex_cell[3], \
+					# 	re_contentRex_cell[4], re_contentRex_cell[5], re_contentRex_cell[6], re_contentRex_cell[7], re_contentRex_cell[8], \
+					# 	re_contentRex_cell[9], re_contentRex_cell[10], re_contentRex_cell[11], re_contentRex_cell[12], re_contentRex_cell[13], \
+					# 	re_contentRex_cell[14], re_contentRex_cell[15], re_contentRex_cell[16], re_contentRex_cell[17], re_contentRex_cell[18])
+
 			if len(contentRex_cell) == 0:
 				break
 			break
@@ -145,13 +160,11 @@ class du(object):
 	'''
 	Insert into date to MySQL (phpmyadmin)
 	'''
-	def insert_database(self, datetime, ip, \
-			UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, \
-				DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, \
-					RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, \
-						Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, ACK, NACK, \
-							UL_RANK_1, UL_RANK_2, UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, \
-								macActiveUe, MAC_DL_traffic_ingress):
+	def insert_database(self, datetime, ip, UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, \
+			DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, \
+			Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, PUSCH_PWR_0_45, PUSCH_PWR_45_90, PUSCH_PWR_90_135, \
+			PUSCH_PWR_135_180, PUSCH_PWR_180_225, PUSCH_PWR_225_273, ACK, NACK, UL_RANK_1, UL_RANK_2, \
+			UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, macActiveUe, avgPrbAsgnRateDl, avgPrbAsgnRateUl, MAC_DL_traffic_ingress):
 		try:
 			mysql_info = {
 				'host': '172.32.3.153',
@@ -162,22 +175,18 @@ class du(object):
 			}
 			conn = connect(**mysql_info)
 			cur = conn.cursor()
-			sql = """INSERT INTO {table}(DateTime , IP, \
-				UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, \
-					DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, \
-						RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, \
-							Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, ACK, NACK, \
-								UL_RANK_1, UL_RANK_2, UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, \
-									macActiveUe, MAC_DL_traffic_ingress) \
-				VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""".format(table='du')
+			sql = """INSERT INTO {table}(DateTime , IP, UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, \
+				DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, \
+				Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, PUSCH_PWR_0_45, PUSCH_PWR_45_90, PUSCH_PWR_90_135, \
+				PUSCH_PWR_135_180, PUSCH_PWR_180_225, PUSCH_PWR_225_273, ACK, NACK, UL_RANK_1, UL_RANK_2, \
+				UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, macActiveUe, avgPrbAsgnRateDl, avgPrbAsgnRateUl, MAC_DL_traffic_ingress) \
+			VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""".format(table='du')
 			# print(sql)
-			cur.execute(sql, (datetime, ip, 
-				UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, 
-					DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, 
-						RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, 
-							Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, ACK, NACK, 
-								UL_RANK_1, UL_RANK_2, UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, 
-									macActiveUe, MAC_DL_traffic_ingress))
+			cur.execute(sql, (datetime, ip, UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, \
+				DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, \
+				Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, PUSCH_PWR_0_45, PUSCH_PWR_45_90, PUSCH_PWR_90_135, \
+				PUSCH_PWR_135_180, PUSCH_PWR_180_225, PUSCH_PWR_225_273, ACK, NACK, UL_RANK_1, UL_RANK_2, \
+				UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, macActiveUe, avgPrbAsgnRateDl, avgPrbAsgnRateUl, MAC_DL_traffic_ingress))
 			conn.commit()
 			print('The information is commit to database.')
 		except Exception as e:
