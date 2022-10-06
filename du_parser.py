@@ -110,7 +110,7 @@ class du(object):
 					# print('Cell', re_contentRex_cell[11])
 					# print('CRC GOOD', re_contentRex_cell[0])
 					# print('CRC BAD', re_contentRex_cell[1])
-					# print('UL MCS ACG', re_contentRex_cell[2])
+					# print('UL MCS AVG', re_contentRex_cell[2])
 					# print('ACK', re_contentRex_cell[3])
 					# print('NACK', re_contentRex_cell[4])
 					# print('UL RANK_1', re_contentRex_cell[5])
@@ -149,7 +149,7 @@ class du(object):
 			UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, \
 				DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, \
 					RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, \
-						Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_ACG, ACK, NACK, \
+						Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, ACK, NACK, \
 							UL_RANK_1, UL_RANK_2, UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, \
 								macActiveUe, MAC_DL_traffic_ingress):
 		try:
@@ -166,7 +166,7 @@ class du(object):
 				UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, \
 					DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, \
 						RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, \
-							Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_ACG, ACK, NACK, \
+							Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, ACK, NACK, \
 								UL_RANK_1, UL_RANK_2, UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, \
 									macActiveUe, MAC_DL_traffic_ingress) \
 				VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""".format(table='du')
@@ -175,7 +175,7 @@ class du(object):
 				UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, 
 					DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, 
 						RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, 
-							Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_ACG, ACK, NACK, 
+							Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, ACK, NACK, 
 								UL_RANK_1, UL_RANK_2, UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, 
 									macActiveUe, MAC_DL_traffic_ingress))
 			conn.commit()
