@@ -43,7 +43,7 @@ class du(object):
 			except:
 				break
 			# contentRex
-			find_du_str = r' Timer:(\D+\d+\D+\d+\D+\d+\D+\d+\D+\d+)\D+RLC  '\
+			find_du_str = r'Timer:(\D+\d+\D+\d+\D+\d+\D+\d+\D+\d+)\D+RLC  '\
 				r'UL traffic :ingress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} '\
 					r'::egress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} \D+\d+\D+\d+\D+'\
 					r'RLC  DL traffic :ingress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} '\
@@ -140,7 +140,7 @@ class du(object):
 					# 	re_contentRex_cell[4], re_contentRex_cell[5], re_contentRex_cell[6], re_contentRex_cell[7], re_contentRex_cell[8], \
 					# 	re_contentRex_cell[9], re_contentRex_cell[10], re_contentRex_cell[11], re_contentRex_cell[12], re_contentRex_cell[13], \
 					# 	re_contentRex_cell[14], re_contentRex_cell[15], re_contentRex_cell[16], re_contentRex_cell[17], re_contentRex_cell[18])
-
+			sleep(1)
 			if len(contentRex_cell) == 0:
 				break
 			break
