@@ -140,6 +140,7 @@ class du(object):
 					# 	re_contentRex_cell[4], re_contentRex_cell[5], re_contentRex_cell[6], re_contentRex_cell[7], re_contentRex_cell[8], \
 					# 	re_contentRex_cell[9], re_contentRex_cell[10], re_contentRex_cell[11], re_contentRex_cell[12], re_contentRex_cell[13], \
 					# 	re_contentRex_cell[14], re_contentRex_cell[15], re_contentRex_cell[16], re_contentRex_cell[17], re_contentRex_cell[18])
+					print('Insert database is done.')
 			sleep(1)
 			if len(contentRex_cell) == 0:
 				break
@@ -182,16 +183,21 @@ class du(object):
 				UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, macActiveUe, avgPrbAsgnRateDl, avgPrbAsgnRateUl, MAC_DL_traffic_ingress) \
 			VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""".format(table='du')
 			# print(sql)
+			print('SQL print done.')
 			cur.execute(sql, (datetime, ip, UL_Ingress, UL_Ingress_PKT, UL_Egress, UL_Egress_PKT, \
 				DL_Ingress, DL_Ingress_PKT, DL_Egress, DL_Egress_PKT, RLCL_DL_UM_Throughput, RLCL_DL_AM_Throughput, \
 				Cell_number, CRC_GOOD, CRC_BAD, UL_MCS_AVG, PUSCH_PWR_0_45, PUSCH_PWR_45_90, PUSCH_PWR_90_135, \
 				PUSCH_PWR_135_180, PUSCH_PWR_180_225, PUSCH_PWR_225_273, ACK, NACK, UL_RANK_1, UL_RANK_2, \
 				UL_Scheduled_Layer_1, UL_Scheduled_Layer_2, macActiveUe, avgPrbAsgnRateDl, avgPrbAsgnRateUl, MAC_DL_traffic_ingress))
+			print('SQL execute done.')
 			conn.commit()
 			print('The information is commit to database.')
 		except Exception as e:
 			# raise e
 			pass
+		finally:
+			print('Connection is closed.')
+			conn.close()
 
 if __name__ == '__main__':
 	while True:
