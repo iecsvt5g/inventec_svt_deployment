@@ -42,109 +42,114 @@ class du(object):
 				re_du = check_output(du_tail, shell=True).decode('utf-8').strip()
 			except:
 				break
-			# contentRex
-			find_du_str = r'Timer:(\D+\d+\D+\d+\D+\d+\D+\d+\D+\d+)\D+RLC  '\
-				r'UL traffic :ingress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} '\
-					r'::egress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} \D+\d+\D+\d+\D+'\
-					r'RLC  DL traffic :ingress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} '\
-						r'::egress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} \D+\d+\D+\d+\D+RLCL  '\
-						r'DL traffic um throughput\D{1}(\d+\D+\d+)\D{1} um sche cnt\D+\d+\D+am throughput\D{1}(\d+\D+\d+)\D{1} am sche cnt\D{1}\d+\D{1}\D{1}'
-			
-			contentRex = re.findall(find_du_str, re_du)
-			# print(contentRex)
-			if len(contentRex) == 0:
-				break
-			for cell_number in range(int(cell_tail)):
-				find_du_cell_str = r'5GNR SYSTEM OVERVIEW AT\D+\d+\D+\d+\D+\d+\D+' + str(cell_number) + '\D.*\D+.*\D+.*\D+.*'\
-						r'CRC_GOOD \D{1}(\d+)\D{1}\D+.*CRC_BAD\D{1}(\d+)\D{1}\D+.*UL_MCS_AVG\D{1}(\d+)\D{1}'\
-						r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*PUSCH MAX DMRS PWR RBIDX\D+\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*'\
-							r'ACK\D+(\d+)\D+\D+(\d+)\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*'\
-							r'UL: rank1\D{1}(\d+)\D+rank2\D{1}(\d+)\D{1} schedduled layer1\D{1}(\d+)\D{1} layer2\D{1}(\d+)\D{1}'\
-								r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+macActiveUe\D{1}(\d+)\D{1}\D+.*\D+.*avgPrbAsgnRateDl\D+(\d+)%\D+.*\D+.*avgPrbAsgnRateUl\D+(\d+)%\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+'\
-									r'MAC DL traffic :ingress\D{1}(\d+\D+\d+)\D{1}\D+.*cell_index\D{1}(\d+)\D{1}'
-				# print(find_du_cell_str)
-				contentRex_cell = re.findall(find_du_cell_str, re_du)
-				# print(contentRex_cell)
+
+			try:
+				# contentRex
+				find_du_str = r'Timer:(\D+\d+\D+\d+\D+\d+\D+\d+\D+\d+)\D+RLC  '\
+					r'UL traffic :ingress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} '\
+						r'::egress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} \D+\d+\D+\d+\D+'\
+						r'RLC  DL traffic :ingress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} '\
+							r'::egress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} \D+\d+\D+\d+\D+RLCL  '\
+							r'DL traffic um throughput\D{1}(\d+\D+\d+)\D{1} um sche cnt\D+\d+\D+am throughput\D{1}(\d+\D+\d+)\D{1} am sche cnt\D{1}\d+\D{1}\D{1}'
+				
+				contentRex = re.findall(find_du_str, re_du)
+				print(contentRex, 'find_du_str findall')
+				if len(contentRex) == 0:
+					break
+				for cell_number in range(int(cell_tail)):
+					find_du_cell_str = r'5GNR SYSTEM OVERVIEW AT\D+\d+\D+\d+\D+\d+\D+' + str(cell_number) + '\D.*\D+.*\D+.*\D+.*'\
+							r'CRC_GOOD \D{1}(\d+)\D{1}\D+.*CRC_BAD\D{1}(\d+)\D{1}\D+.*UL_MCS_AVG\D{1}(\d+)\D{1}'\
+							r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*PUSCH MAX DMRS PWR RBIDX\D+\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*'\
+								r'ACK\D+(\d+)\D+\D+(\d+)\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*'\
+								r'UL: rank1\D{1}(\d+)\D+rank2\D{1}(\d+)\D{1} schedduled layer1\D{1}(\d+)\D{1} layer2\D{1}(\d+)\D{1}'\
+									r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+macActiveUe\D{1}(\d+)\D{1}\D+.*\D+.*avgPrbAsgnRateDl\D+(\d+)%\D+.*\D+.*avgPrbAsgnRateUl\D+(\d+)%\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+'\
+										r'MAC DL traffic :ingress\D{1}(\d+\D+\d+)\D{1}\D+.*cell_index\D{1}(\d+)\D{1}'
+					# print(find_du_cell_str)
+					contentRex_cell = re.findall(find_du_cell_str, re_du)
+					print(contentRex_cell)
+					if len(contentRex_cell) == 0:
+						break
+					else:
+						# contentRex
+						contentRex = contentRex[:]
+						print(contentRex, 'contentRex')
+						len_contentRex = len(contentRex)-1
+						print(len_contentRex, 'len')
+						re_contentRex = contentRex[len_contentRex]
+						print(re_contentRex, 're_contentRex')
+
+						timerRex = re_contentRex[0]
+						print(timerRex, 'timeRex')
+						utc_time = self.datetime_taiwan_to_utc(timerRex)
+						print(utc_time)
+						ip = self._ip_parser()
+						print(ip)
+						
+						# contentRex cell
+						contentRex_cell = contentRex_cell[:]
+						print(contentRex_cell, 'contentRex_cell')
+						len_contentRex = len(contentRex_cell)-1
+						print(len_contentRex, 'len')
+						re_contentRex_cell = contentRex_cell[len_contentRex]
+						print(re_contentRex_cell, 're_contentRex_cell')
+
+						# for i in range(1, 11):
+						# 	print('contentRex', re_contentRex[i])
+						# print('UL traffic ingress', re_contentRex[1])
+						# print('UL traffic ingress pkt', re_contentRex[2])
+						# print('UL traffic egress', re_contentRex[3])
+						# print('UL traffic egress pkt', re_contentRex[4])
+						# print('DL traffic ingress', re_contentRex[5])
+						# print('DL traffic ingress pkt', re_contentRex[6])
+						# print('DL traffic egress', re_contentRex[7])
+						# print('DL traffic egress pkt', re_contentRex[8])
+						# print('RLCL DL traffic um throughput', re_contentRex[9])
+						# print('RLCL DL traffic am throughput', re_contentRex[10])
+
+						# for j in range(20):
+						# 	print('re_contentRex_cell', re_contentRex_cell[j])
+						# print('Cell', re_contentRex_cell[19])
+						# print('CRC GOOD', re_contentRex_cell[0])
+						# print('CRC BAD', re_contentRex_cell[1])
+						# print('UL MCS AVG', re_contentRex_cell[2])
+						# print('PUSCH PWR_0_45', re_contentRex_cell[3])
+						# print('PUSCH PWR_45_90', re_contentRex_cell[4])
+						# print('PUSCH PWR_90_135', re_contentRex_cell[5])
+						# print('PUSCH PWR_135_180', re_contentRex_cell[6])
+						# print('PUSCH PWR_180_225', re_contentRex_cell[7])
+						# print('PUSCH PWR_225_273', re_contentRex_cell[8])
+						# print('ACK', re_contentRex_cell[9])
+						# print('NACK', re_contentRex_cell[10])
+						# print('UL RANK_1', re_contentRex_cell[11])
+						# print('UL RANK_2', re_contentRex_cell[12])
+						# print('UL Scheduled Layer_1', re_contentRex_cell[13])
+						# print('UL Scheduled Layer_2', re_contentRex_cell[14])
+						# print('macActiveUe', re_contentRex_cell[15])
+						# print('avgPrbAsgnRateDl', re_contentRex_cell[16])
+						# print('avgPrbAsgnRateUl', re_contentRex_cell[17])
+						# print('MAC DL traffic ingress', re_contentRex_cell[18])
+							
+						self.insert_database(utc_time, ip, re_contentRex[1], re_contentRex[2], re_contentRex[3], re_contentRex[4], \
+							re_contentRex[5], re_contentRex[6], re_contentRex[7], re_contentRex[8], re_contentRex[9], re_contentRex[10], \
+							re_contentRex_cell[19], re_contentRex_cell[0], re_contentRex_cell[1], re_contentRex_cell[2], re_contentRex_cell[3], \
+							re_contentRex_cell[4], re_contentRex_cell[5], re_contentRex_cell[6], re_contentRex_cell[7], re_contentRex_cell[8], \
+							re_contentRex_cell[9], re_contentRex_cell[10], re_contentRex_cell[11], re_contentRex_cell[12], re_contentRex_cell[13], \
+							re_contentRex_cell[14], re_contentRex_cell[15], re_contentRex_cell[16], re_contentRex_cell[17], re_contentRex_cell[18])
+		
+						# print(utc_time, ip, re_contentRex[1], re_contentRex[2], re_contentRex[3], re_contentRex[4], \
+						# 	re_contentRex[5], re_contentRex[6], re_contentRex[7], re_contentRex[8], re_contentRex[9], re_contentRex[10], \
+						# 	re_contentRex_cell[19], re_contentRex_cell[0], re_contentRex_cell[1], re_contentRex_cell[2], re_contentRex_cell[3], \
+						# 	re_contentRex_cell[4], re_contentRex_cell[5], re_contentRex_cell[6], re_contentRex_cell[7], re_contentRex_cell[8], \
+						# 	re_contentRex_cell[9], re_contentRex_cell[10], re_contentRex_cell[11], re_contentRex_cell[12], re_contentRex_cell[13], \
+						# 	re_contentRex_cell[14], re_contentRex_cell[15], re_contentRex_cell[16], re_contentRex_cell[17], re_contentRex_cell[18])
+						print('Insert database is done.')
+				sleep(1)
 				if len(contentRex_cell) == 0:
 					break
-				else:
-					# contentRex
-					contentRex = contentRex[:]
-					# print(contentRex)
-					len_contentRex = len(contentRex)-1
-					# print(len_contentRex, 'len')
-					re_contentRex = contentRex[len_contentRex]
-					print(re_contentRex)
-
-					timerRex = re_contentRex[0]
-					# print(timerRex)
-					utc_time = self.datetime_taiwan_to_utc(timerRex)
-					print(utc_time)
-					ip = self._ip_parser()
-					print(ip)
-					
-					# contentRex cell
-					contentRex_cell = contentRex_cell[:]
-					# print(contentRex_cell)
-					len_contentRex = len(contentRex_cell)-1
-					# print(len_contentRex, 'len')
-					re_contentRex_cell = contentRex_cell[len_contentRex]
-					print(re_contentRex_cell)
-
-					# for i in range(1, 11):
-					# 	print('contentRex', re_contentRex[i])
-					# print('UL traffic ingress', re_contentRex[1])
-					# print('UL traffic ingress pkt', re_contentRex[2])
-					# print('UL traffic egress', re_contentRex[3])
-					# print('UL traffic egress pkt', re_contentRex[4])
-					# print('DL traffic ingress', re_contentRex[5])
-					# print('DL traffic ingress pkt', re_contentRex[6])
-					# print('DL traffic egress', re_contentRex[7])
-					# print('DL traffic egress pkt', re_contentRex[8])
-					# print('RLCL DL traffic um throughput', re_contentRex[9])
-					# print('RLCL DL traffic am throughput', re_contentRex[10])
-
-					# for j in range(20):
-					# 	print('re_contentRex_cell', re_contentRex_cell[j])
-					# print('Cell', re_contentRex_cell[19])
-					# print('CRC GOOD', re_contentRex_cell[0])
-					# print('CRC BAD', re_contentRex_cell[1])
-					# print('UL MCS AVG', re_contentRex_cell[2])
-					# print('PUSCH PWR_0_45', re_contentRex_cell[3])
-					# print('PUSCH PWR_45_90', re_contentRex_cell[4])
-					# print('PUSCH PWR_90_135', re_contentRex_cell[5])
-					# print('PUSCH PWR_135_180', re_contentRex_cell[6])
-					# print('PUSCH PWR_180_225', re_contentRex_cell[7])
-					# print('PUSCH PWR_225_273', re_contentRex_cell[8])
-					# print('ACK', re_contentRex_cell[9])
-					# print('NACK', re_contentRex_cell[10])
-					# print('UL RANK_1', re_contentRex_cell[11])
-					# print('UL RANK_2', re_contentRex_cell[12])
-					# print('UL Scheduled Layer_1', re_contentRex_cell[13])
-					# print('UL Scheduled Layer_2', re_contentRex_cell[14])
-					# print('macActiveUe', re_contentRex_cell[15])
-					# print('avgPrbAsgnRateDl', re_contentRex_cell[16])
-					# print('avgPrbAsgnRateUl', re_contentRex_cell[17])
-					# print('MAC DL traffic ingress', re_contentRex_cell[18])
-						
-					self.insert_database(utc_time, ip, re_contentRex[1], re_contentRex[2], re_contentRex[3], re_contentRex[4], \
-						re_contentRex[5], re_contentRex[6], re_contentRex[7], re_contentRex[8], re_contentRex[9], re_contentRex[10], \
-						re_contentRex_cell[19], re_contentRex_cell[0], re_contentRex_cell[1], re_contentRex_cell[2], re_contentRex_cell[3], \
-						re_contentRex_cell[4], re_contentRex_cell[5], re_contentRex_cell[6], re_contentRex_cell[7], re_contentRex_cell[8], \
-						re_contentRex_cell[9], re_contentRex_cell[10], re_contentRex_cell[11], re_contentRex_cell[12], re_contentRex_cell[13], \
-						re_contentRex_cell[14], re_contentRex_cell[15], re_contentRex_cell[16], re_contentRex_cell[17], re_contentRex_cell[18])
-	
-					# print(utc_time, ip, re_contentRex[1], re_contentRex[2], re_contentRex[3], re_contentRex[4], \
-					# 	re_contentRex[5], re_contentRex[6], re_contentRex[7], re_contentRex[8], re_contentRex[9], re_contentRex[10], \
-					# 	re_contentRex_cell[19], re_contentRex_cell[0], re_contentRex_cell[1], re_contentRex_cell[2], re_contentRex_cell[3], \
-					# 	re_contentRex_cell[4], re_contentRex_cell[5], re_contentRex_cell[6], re_contentRex_cell[7], re_contentRex_cell[8], \
-					# 	re_contentRex_cell[9], re_contentRex_cell[10], re_contentRex_cell[11], re_contentRex_cell[12], re_contentRex_cell[13], \
-					# 	re_contentRex_cell[14], re_contentRex_cell[15], re_contentRex_cell[16], re_contentRex_cell[17], re_contentRex_cell[18])
-					print('Insert database is done.')
-			sleep(1)
-			if len(contentRex_cell) == 0:
 				break
-			break
+			except:
+				continue
+
 	'''
 	IP Address Parser
 	'''
