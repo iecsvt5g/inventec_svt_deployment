@@ -86,11 +86,11 @@ class du(object):
 						print(ip)
 						
 						# contentRex cell
-						contentRex_cell = contentRex_cell[:]
-						print(contentRex_cell, 'contentRex_cell')
-						len_contentRex = len(contentRex_cell)-1
+						new_contentRex_cell = contentRex_cell[:]
+						print(new_contentRex_cell, 'contentRex_cell')
+						len_contentRex = len(new_contentRex_cell)-1
 						print(len_contentRex, 'len')
-						re_contentRex_cell = contentRex_cell[len_contentRex]
+						re_contentRex_cell = new_contentRex_cell[len_contentRex]
 						print(re_contentRex_cell, 're_contentRex_cell')
 
 						# for i in range(1, 11):
