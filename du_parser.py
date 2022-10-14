@@ -51,7 +51,7 @@ class du(object):
 						r'RLC  DL traffic :ingress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} '\
 							r'::egress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} \D+\d+\D+\d+\D+RLCL  '\
 							r'DL traffic um throughput\D{1}(\d+\D+\d+)\D{1} um sche cnt\D+\d+\D+am throughput\D{1}(\d+\D+\d+)\D{1} am sche cnt\D{1}\d+\D{1}\D{1}'
-				
+				contentRex = ''
 				contentRex = re.findall(find_du_str, re_du)
 				print(contentRex, 'find_du_str findall')
 				if len(contentRex) == 0:
@@ -65,6 +65,7 @@ class du(object):
 									r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+macActiveUe\D{1}(\d+)\D{1}\D+.*\D+.*avgPrbAsgnRateDl\D+(\d+)%\D+.*\D+.*avgPrbAsgnRateUl\D+(\d+)%\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+'\
 										r'MAC DL traffic :ingress\D{1}(\d+\D+\d+)\D{1}\D+.*cell_index\D{1}(\d+)\D{1}'
 					# print(find_du_cell_str)
+					contentRex_cell = ''
 					contentRex_cell = re.findall(find_du_cell_str, re_du)
 					print(contentRex_cell)
 					if len(contentRex_cell) == 0:
