@@ -45,6 +45,7 @@ class du(object):
 
 			try:
 				# contentRex
+				find_du_str = ''
 				find_du_str = r'Timer:(\D+\d+\D+\d+\D+\d+\D+\d+\D+\d+)\D+RLC  '\
 					r'UL traffic :ingress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} '\
 						r'::egress\D{1}(\d+\D+\d+)\D{1} pkt\D{1}(\d+)\D{1} \D+\d+\D+\d+\D+'\
@@ -57,6 +58,7 @@ class du(object):
 				if len(contentRex) == 0:
 					break
 				for cell_number in range(int(cell_tail)):
+					find_du_cell_str = ''
 					find_du_cell_str = r'5GNR SYSTEM OVERVIEW AT\D+\d+\D+\d+\D+\d+\D+' + str(cell_number) + '\D.*\D+.*\D+.*\D+.*'\
 							r'CRC_GOOD \D{1}(\d+)\D{1}\D+.*CRC_BAD\D{1}(\d+)\D{1}\D+.*UL_MCS_AVG\D{1}(\d+)\D{1}'\
 							r'\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*PUSCH MAX DMRS PWR RBIDX\D+\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+\d+_\d+ (\d+)\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*\D+.*'\
