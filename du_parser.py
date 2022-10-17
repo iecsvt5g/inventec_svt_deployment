@@ -9,6 +9,7 @@ Created on 2022/10/04
 from subprocess import check_output
 from pymysql import connect
 from time import *
+from line_notify import line_notify
 import re
 
 class du(object):
@@ -27,7 +28,12 @@ class du(object):
 	DU information parser
 	'''
 	def _du_parser(self):
+		status_check = 0
 		while True:
+			status_check += 1
+			if status_check > 100:
+				l_n = line_notify()
+				l_n.send_message('DU parser status > 100 times')
 			cell_tail= 'grep \'cell_idx\' /home/BaiBBU_XSS/BaiBBU_SXSS/DU/bin/logs_gNB_DU | awk \'END{print $(NF)}\''
 			# cell_tail = 'grep \'cell_idx\' logs_gNB_DU_155 | awk \'END{print $(NF)}\''
 			# cell_tail = 'grep \'cell_idx\' logs_gNB_DU_199 | awk \'END{print $(NF)}\''
