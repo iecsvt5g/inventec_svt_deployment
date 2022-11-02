@@ -1,0 +1,142 @@
+#! /bin/bash
+#
+# test       Bring  test
+#
+# chkconfig: 2345 99 10
+# description: BaiBBU start script
+#
+### BEGIN INIT INFO
+# Provides: BBU
+# Should-Start: iptables systemd-networkd-wait-online
+# Short-Description: BBU start script
+# Description: BBU start script
+### END INIT INFO
+
+##############OEM scirpt write##############
+BASE_DIR=/home
+IMG_PREFIX=BaiBBU_XSS
+PHY_PREFIX=BaiBBU_PXSS
+DRV_PREFIX=BaiBBU_DXSS
+OAM_PREFIX=BaiBBU_OXSS
+GNB_PREFIX=BaiBBU_SXSS
+###########################################
+
+IMG_DIR=${BASE_DIR}/${IMG_PREFIX}
+DRV_DIR=${IMG_DIR}/${DRV_PREFIX}
+PHY_DIR=${IMG_DIR}/${PHY_PREFIX}
+OAM_DIR=${IMG_DIR}/${OAM_PREFIX}
+GNB_DIR=${IMG_DIR}/${GNB_PREFIX}
+
+PLAT_ENV_DIR=$IMG_DIR/environment
+STATUS_FILE=/etc/BBU_cfg/version_status
+KEYLOG_FILE=/var/log/keylog.txt
+LOG_HEAD=BBU
+
+key_log() {
+    MSG=$1
+    TAG=$2
+    LEVEL=$3
+
+    if [ "${LEVEL}" == "info" ];then
+        echo "[${TAG}] ${MSG}"
+    elif [ "${LEVEL}" == "log" ];then
+        printf "$(date +%Y/%m/%d)$(uptime|awk -F ',' '{print $1}')|LOG|%-12s|%s\n" "${TAG}" "${MSG}" >> ${KEYLOG_FILE}
+    elif [ "${LEVEL}" == "syslog" ];then
+        logger -t [${TAG}] -p user.info  "${MSG}"
+    elif [ "${LEVEL}" == "debug" ];then
+        echo "[${TAG}] ${MSG}"
+        logger -t [${TAG}] -p user.debug "${MSG}"
+        printf "$(date +%Y/%m/%d)$(uptime|awk -F ',' '{print $1}')|DBG|%-12s|%s\n" "${TAG}" "${MSG}" >> ${KEYLOG_FILE}
+    elif [ "${LEVEL}" == "err" ];then
+        echo "[${TAG}] (ERR) ${MSG}"
+        logger -t [${TAG}] -p user.err   "${MSG}"
+        printf "$(date +%Y/%m/%d)$(uptime|awk -F ',' '{print $1}')|ERR|%-12s|%s\n" "${TAG}" "${MSG}" >> ${KEYLOG_FILE}
+    else
+        echo "[KEY_LOG] Invalid level \"${LEVEL}\""
+    fi
+}
+
+upgrade_check()
+{
+    if [ -L "${IMG_DIR}-slave" ];then
+        /bin/ImageUpgrade --rollback 
+    fi
+}
+
+start()
+{
+    echo 1 > /sys/kernel/ktimer_lockless_check
+    upgrade_check
+    if [ -x $DRV_DIR/drv_app ];then
+       bash $DRV_DIR/drv_app start
+    fi
+    
+    systemctl restart dhcpd.service
+
+    if [ -x $OAM_DIR/oam_app ];then
+       bash $OAM_DIR/oam_app start
+    fi
+
+    if [ -x $PLAT_ENV_DIR/PLAT_app ];then
+       bash $PLAT_ENV_DIR/PLAT_app start
+    fi
+
+    if [ -x $OAM_DIR/lic_app ];then
+       bash $OAM_DIR/lic_app start
+    fi
+
+    if [ -x $PHY_DIR/PHY_app ];then
+       bash $PHY_DIR/PHY_app start
+       sleep 15
+    fi
+
+    if [ -x $GNB_DIR/gNB_app ];then
+       bash $GNB_DIR/gNB_app start
+    fi
+}
+
+stop()
+{
+    mibcli ruCarrierAction deactive
+
+    if [ -x $PHY_DIR/PHY_app ];then
+       bash $PHY_DIR/PHY_app stop
+    fi
+
+    if [ -x $GNB_DIR/gNB_app ];then
+       bash $GNB_DIR/gNB_app stop
+    fi
+
+    if [ -x $PLAT_ENV_DIR/PLAT_app ];then
+       bash $PLAT_ENV_DIR/PLAT_app stop
+    fi
+
+    if [ -x $OAM_DIR/oam_app ];then
+       bash $OAM_DIR/oam_app stop 
+    fi
+
+    if [ -x $DRV_DIR/drv_app ];then
+       bash $DRV_DIR/drv_app stop
+    fi
+}
+
+case "$1" in
+start)
+    /etc/inventec_svt_deployment/bbu_status_check_start
+    start
+    ;;
+
+stop)
+    stop
+    /etc/inventec_svt_deployment/bbu_status_check_stop
+    ;;
+
+restart)
+    stop
+    /etc/inventec_svt_deployment/bbu_status_check_stop
+    #sleep 1
+    sleep 10
+    start
+    /etc/inventec_svt_deployment/bbu_status_check_start
+    ;;
+esac
