@@ -1,0 +1,9 @@
+[Unit]
+Description=Inventec BBU RESTful API service.
+
+[Service]
+Type=simple
+ExecStart=/etc/inventec_svt_deployment/api
+
+[Install]
+WantedBy=multi-user.target
