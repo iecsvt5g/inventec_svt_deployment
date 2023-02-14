@@ -26,3 +26,10 @@ sleep 1
 pip install requests
 sleep 1
 pip install pyinstaller
+sleep 1
+# REST API
+pip install psutil-5.9.4
+sleep 1
+pip install fastapi 
+sleep 1
+pip install uvicorn[standard]  # ASGI Server
