@@ -18,4 +18,7 @@ systemctl status phy_parser_status.service | grep Active
 systemctl restart du_parser.service
 systemctl status du_parser.service | grep Loaded
 systemctl status du_parser.service | grep Active
+systemctl restart du_parser_new.service
+systemctl status du_parser_new.service | grep Loaded
+systemctl status du_parser_new.service | grep Active
 echo 'Service is restarted.'
