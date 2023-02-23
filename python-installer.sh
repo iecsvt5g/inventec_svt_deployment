@@ -10,8 +10,8 @@ yum install python36 python36-libs python36-devel python36-pip -y
 sleep 1
 pip3 install --upgrade pip
 sleep 1
-echo "alias python='/usr/bin/python3.6'" >> ~/.bashrc
-echo "alias pip=pip3" >> ~/.bashrc
+#echo "alias python='/usr/bin/python3.6'" >> ~/.bashrc
+#echo "alias pip=pip3" >> ~/.bashrc
 source ~/.bashrc
 python -V
 sleep 1
