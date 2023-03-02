@@ -3,7 +3,7 @@ Description=Inventec BBU RESTful API service.
 
 [Service]
 Type=simple
-ExecStart=/etc/inventec_svt_deployment/api
+ExecStart=python3 /etc/inventec_svt_deployment/api.py
 
 [Install]
 WantedBy=multi-user.target
