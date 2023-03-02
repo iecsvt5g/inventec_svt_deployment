@@ -11,7 +11,8 @@ import json, ast
 #FILE_PATH = dirname.split("/")
 #FILE_PATH[-1]=""
 #BASE_PATH = "/".join(str(x) for x in FILE_PATH)
-path.append("/etc/iev_svt_deployment")
+BASE = "/etc/inventec_svt_deployment/"
+#path.append("/etc/iev_svt_deployment")
 #from mybbu import  *
 import subprocess
 import asyncio
@@ -222,8 +223,8 @@ def repeat_task_aggregate_request_records() -> None:
     tasks = ["bmc"]
     for t in tasks:
 #        MYBBU[t.upper] = ""
-        print("./mybbu --{0}".format(t))
-        MYBBU["{0}".format(t.upper())] = run_command("./mybbu --{0}".format(t) )
+        print(BASE+"mybbu --{0}".format(t))
+        MYBBU["{0}".format(t.upper())] = run_command("{0}mybbu --{1}".format(BASE,t) )
     print("- ",MYBBU)
     logger.debug(f'== Long Schedule Task: Update ',time.time())
 
@@ -233,7 +234,7 @@ def schedule_task2() -> None:   # 5 sec schedule task
     tasks = ["service","alarm","system","ru","acc","bler"]
     for t in tasks:
         print("./mybbu --{0}".format(t))
-        MYBBU["{0}".format(t.upper())] = run_command("./mybbu --{0}".format(t))
+        MYBBU["{0}".format(t.upper())] = run_command("{0}mybbu --{1}".format(BASE,t) )
     print('== Schedule Task2: Update ',time.time())
 
 ##
@@ -245,7 +246,7 @@ async def update():
     tasks = ["service","alarm","system","ru","acc","bler","bmc"]
     for t in tasks:
         print("./mybbu --{0}".format(t))
-        MYBBU["{0}".format(t.upper())] = run_command("./mybbu --{0}".format(t))
+        MYBBU["{0}".format(t.upper())] = run_command("{0}mybbu --{1}".format(BASE,t) )
 
     return True
 
