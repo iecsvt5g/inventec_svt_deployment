@@ -21,4 +21,7 @@ systemctl status du_parser.service | grep Active
 systemctl enable du_parser_new.service
 systemctl status du_parser_new.service | grep Loaded
 systemctl status du_parser_new.service | grep Active
+systemctl enable bbu_api.service
+systemctl status bbu_api.service | grep Loaded
+systemctl status bbu_api.service | grep Active
 echo 'Service status is showed.'
