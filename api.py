@@ -11,8 +11,7 @@ import json, ast
 #FILE_PATH = dirname.split("/")
 #FILE_PATH[-1]=""
 #BASE_PATH = "/".join(str(x) for x in FILE_PATH)
-BASE = "/etc/inventec_svt_deployment/"
-#path.append("/etc/iev_svt_deployment")
+path.append("/etc/iev_svt_deployment")
 #from mybbu import  *
 import subprocess
 import asyncio
@@ -223,8 +222,8 @@ def repeat_task_aggregate_request_records() -> None:
     tasks = ["bmc"]
     for t in tasks:
 #        MYBBU[t.upper] = ""
-        print(BASE+"mybbu --{0}".format(t))
-        MYBBU["{0}".format(t.upper())] = run_command("{0}mybbu --{1}".format(BASE,t) )
+        print("./mybbu --{0}".format(t))
+        MYBBU["{0}".format(t.upper())] = run_command("./mybbu --{0}".format(t) )
     print("- ",MYBBU)
     logger.debug(f'== Long Schedule Task: Update ',time.time())
 
@@ -234,7 +233,7 @@ def schedule_task2() -> None:   # 5 sec schedule task
     tasks = ["service","alarm","system","ru","acc","bler"]
     for t in tasks:
         print("./mybbu --{0}".format(t))
-        MYBBU["{0}".format(t.upper())] = run_command("{0}mybbu --{1}".format(BASE,t) )
+        MYBBU["{0}".format(t.upper())] = run_command("./mybbu --{0}".format(t))
     print('== Schedule Task2: Update ',time.time())
 
 ##
@@ -246,7 +245,7 @@ async def update():
     tasks = ["service","alarm","system","ru","acc","bler","bmc"]
     for t in tasks:
         print("./mybbu --{0}".format(t))
-        MYBBU["{0}".format(t.upper())] = run_command("{0}mybbu --{1}".format(BASE,t) )
+        MYBBU["{0}".format(t.upper())] = run_command("./mybbu --{0}".format(t))
 
     return True
 
@@ -255,17 +254,17 @@ async def update():
 @app.post("/service/start", tags=["BBU"])
 def start():
     logger.debug(f"BBU Start")
-    return
+    return run_command("./mybbu --start")
 
 @app.post("/service/stop", tags=["BBU"])
 def stop():
     logger.debug(f"BBU Stop")
-    return
+    return run_command("./mybbu --stop")
 
 @app.post("/service/restart", tags=["BBU"])
 def restart():
     logger.debug(f"BBU Restart")
-    return
+    return run_command("./mybbu --restart")
 
 # GET BBU information
 @app.get("/info", tags=["BBU"])
