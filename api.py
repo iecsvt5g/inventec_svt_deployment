@@ -7,15 +7,11 @@ import random, string
 import os
 from sys import path
 import json, ast
-#dirname, filename = os.path.split(os.path.abspath(__file__))
-#FILE_PATH = dirname.split("/")
-#FILE_PATH[-1]=""
-#BASE_PATH = "/".join(str(x) for x in FILE_PATH)
-path.append("/etc/iev_svt_deployment")
-#from mybbu import  *
+BASE = "/etc/inventec_svt_deployment/"
+path.append(BASE)
 import subprocess
 import asyncio
-#from loguru import logger
+
 from functools import wraps
 from asyncio import ensure_future
 from starlette.concurrency import run_in_threadpool
@@ -94,24 +90,16 @@ def valid_ip(address):
 
 def run_command(command):
     result = ""
+    cmd = "{0}{1}".format(BASE,command)
     try:
-        result = subprocess.run(command, stdout=subprocess.PIPE, shell=True, encoding='utf-8')
-#        print(">>1 result,",result)
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, shell=True, encoding='utf-8')
         result = result.stdout
-#        print(">>2 result,",result)
-#        result = result.replace("'", '"')
-#        print(">>3 result,",result)
         result = result.strip()
-#        print(">>4 result,",result,type(result))
-#    json_result = json.loads(result)
         result = eval(result)
-#        result = ast.literal_eval(result)
-#        print(">>5 result,",result)
     except Exception as e:
         print("ERROR : ", e)
     return result
 
-#run_command("./mybbu -h")
 
 ####        ####
 #### task   ### (for schedule task)
@@ -315,5 +303,3 @@ if __name__ == "__main__":
     logger.info(f"== API SERVICE START ==")
     logger.warning("== API SERVICE START ==")
     uvicorn.run(app='api:app', host="0.0.0.0", port=DEFAULT_PORT, reload=False)
-    # http://172.32.3.216:8087/docs
-    # http://172.32.3.216:8087
