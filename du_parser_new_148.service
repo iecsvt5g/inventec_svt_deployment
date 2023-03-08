@@ -1,0 +1,9 @@
+[Unit]
+Description=DU Parser
+
+[Service]
+Type=simple
+ExecStart=/etc/inventec_svt_deployment/du_parser_new_148
+
+[Install]
+WantedBy=multi-user.target

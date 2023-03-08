@@ -24,4 +24,7 @@ systemctl status du_parser_new.service | grep Active
 systemctl restart bbu_api.service
 systemctl status bbu_api.service | grep Loaded
 systemctl status bbu_api.service | grep Active
+systemctl restart du_parser_new_148.service
+systemctl status du_parser_new_148.service | grep Loaded
+systemctl status du_parser_new_148.service | grep Active
 echo 'Service is restarted.'
