@@ -1,0 +1,9 @@
+[Unit]
+Description=FANS Information
+
+[Service]
+Type=simple
+ExecStart=/etc/inventec_svt_deployment/fans_rpm
+
+[Install]
+WantedBy=multi-user.target
