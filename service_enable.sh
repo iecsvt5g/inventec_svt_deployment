@@ -30,4 +30,7 @@ systemctl status du_parser_new_148.service | grep Active
 systemctl enable ru_acc_parser.service
 systemctl status ru_acc_parser.service | grep Loaded
 systemctl status ru_acc_parser.service | grep Active
+systemctl enable fans_rpm.service
+systemctl status fans_rpm.service | grep Loaded
+systemctl status fans_rpm.service | grep Active
 echo 'Service status is showed.'
