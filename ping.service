@@ -1,0 +1,9 @@
+[Unit]
+Description=PING services
+
+[Service]
+Type=simple
+ExecStart=/etc/inventec_svt_deployment/ping
+
+[Install]
+WantedBy=multi-user.target

@@ -33,4 +33,7 @@ systemctl status ru_acc_parser.service | grep Active
 systemctl start fans_rpm.service
 systemctl status fans_rpm.service | grep Loaded
 systemctl status fans_rpm.service | grep Active
+systemctl start ping.service
+systemctl status ping.service | grep Loaded
+systemctl status ping.service | grep Active
 echo 'Service is started.'
