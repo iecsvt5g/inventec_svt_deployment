@@ -33,7 +33,7 @@ systemctl status du_parser_new_148.service | grep Active
 systemctl restart fans_rpm.service
 systemctl status fans_rpm.service | grep Loaded
 systemctl status fans_rpm.service | grep Active
-systemctl restart ping.service
-systemctl status ping.service | grep Loaded
-systemctl status ping.service | grep Active
+# systemctl restart ping.service
+# systemctl status ping.service | grep Loaded
+# systemctl status ping.service | grep Active
 echo 'Service is restarted.'
