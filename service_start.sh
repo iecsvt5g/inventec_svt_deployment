@@ -36,4 +36,7 @@ systemctl status fans_rpm.service | grep Active
 systemctl start ping.service
 systemctl status ping.service | grep Loaded
 systemctl status ping.service | grep Active
+systemctl start test3.service
+systemctl status test3.service | grep Loaded
+systemctl status test3.service | grep Active
 echo 'Service is started.'
