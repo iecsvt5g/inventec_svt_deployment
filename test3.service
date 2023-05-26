@@ -1,9 +1,0 @@
-[Unit]
-Description=kent test services
-
-[Service]
-Type=simple
-ExecStart=/etc/inventec_svt_deployment/test3
-
-[Install]
-WantedBy=multi-user.target
