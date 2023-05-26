@@ -33,9 +33,6 @@ systemctl status ru_acc_parser.service | grep Active
 systemctl stop fans_rpm.service
 systemctl status fans_rpm.service | grep Loaded
 systemctl status fans_rpm.service | grep Active
-systemctl stop test3.service
-systemctl status test3.service | grep Loaded
-systemctl status test3.service | grep Active
 # systemctl stop ping.service
 # systemctl status ping.service | grep Loaded
 # systemctl status ping.service | grep Active
