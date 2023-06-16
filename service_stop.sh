@@ -12,15 +12,15 @@ systemctl status cu_parser_ue.service | grep Active
 systemctl stop watchdog_parser.service
 systemctl status watchdog_parser.service | grep Loaded
 systemctl status watchdog_parser.service | grep Active
-systemctl stop phy_parser_status.service
-systemctl status phy_parser_status.service | grep Loaded
-systemctl status phy_parser_status.service | grep Active
-systemctl stop du_parser.service
-systemctl status du_parser.service | grep Loaded
-systemctl status du_parser.service | grep Active
-systemctl stop du_parser_new.service
-systemctl status du_parser_new.service | grep Loaded
-systemctl status du_parser_new.service | grep Active
+# systemctl stop phy_parser_status.service
+# systemctl status phy_parser_status.service | grep Loaded
+# systemctl status phy_parser_status.service | grep Active
+# systemctl stop du_parser.service
+# systemctl status du_parser.service | grep Loaded
+# systemctl status du_parser.service | grep Active
+# systemctl stop du_parser_new.service
+# systemctl status du_parser_new.service | grep Loaded
+# systemctl status du_parser_new.service | grep Active
 systemctl stop bbu_api.service
 systemctl status bbu_api.service | grep Loaded
 systemctl status bbu_api.service | grep Active
