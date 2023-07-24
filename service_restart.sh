@@ -27,9 +27,9 @@ systemctl status bbu_api.service | grep Active
 systemctl restart du_parser_new_148.service
 systemctl status du_parser_new_148.service | grep Loaded
 systemctl status du_parser_new_148.service | grep Active
-# systemctl restart ru_acc_parser.service
-# systemctl status ru_acc_parser.service | grep Loaded
-# systemctl status ru_acc_parser.service | grep Active
+systemctl restart ru_acc_parser.service
+systemctl status ru_acc_parser.service | grep Loaded
+systemctl status ru_acc_parser.service | grep Active
 systemctl restart fans_rpm.service
 systemctl status fans_rpm.service | grep Loaded
 systemctl status fans_rpm.service | grep Active
