@@ -6,9 +6,9 @@ systemctl status phy_parser.service | grep Active
 systemctl stop cu_parser.service
 systemctl status cu_parser.service | grep Loaded
 systemctl status cu_parser.service | grep Active
-systemctl stop cu_parser_ue.service
-systemctl status cu_parser_ue.service | grep Loaded
-systemctl status cu_parser_ue.service | grep Active
+#systemctl stop cu_parser_ue.service
+#systemctl status cu_parser_ue.service | grep Loaded
+#systemctl status cu_parser_ue.service | grep Active
 systemctl stop watchdog_parser.service
 systemctl status watchdog_parser.service | grep Loaded
 systemctl status watchdog_parser.service | grep Active

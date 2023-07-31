@@ -9,7 +9,9 @@ systemctl status du_parser.service | grep Active
 systemctl disable du_parser_new.service
 systemctl status du_parser_new.service | grep Loaded
 systemctl status du_parser_new.service | grep Active
-
+systemctl disable cu_parser_ue.service
+systemctl status cu_parser_ue.service | grep Loaded
+systemctl status cu_parser_ue.service | grep Active
 # systemctl enable ping.service
 # systemctl status ping.service | grep Loaded
 # systemctl status ping.service | grep Active
