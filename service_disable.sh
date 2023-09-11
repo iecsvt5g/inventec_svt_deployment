@@ -1,18 +1,11 @@
 #/usr/bin/sh
+systemctl daemon-reload
+systemctl disable phy_parser.service
+systemctl disable cu_parser.service
+systemctl disable watchdog_parser.service
+systemctl disable bbu_api.service
+systemctl disable du_parser_new_148.service
+systemctl disable ru_acc_parser.service
+systemctl disable fans_rpm.service
 
-systemctl disable phy_parser_status.service
-systemctl status phy_parser_status.service | grep Loaded
-systemctl status phy_parser_status.service | grep Active
-systemctl disable du_parser.service
-systemctl status du_parser.service | grep Loaded
-systemctl status du_parser.service | grep Active
-systemctl disable du_parser_new.service
-systemctl status du_parser_new.service | grep Loaded
-systemctl status du_parser_new.service | grep Active
-systemctl disable cu_parser_ue.service
-systemctl status cu_parser_ue.service | grep Loaded
-systemctl status cu_parser_ue.service | grep Active
-# systemctl enable ping.service
-# systemctl status ping.service | grep Loaded
-# systemctl status ping.service | grep Active
 echo 'Service status is showed.'
